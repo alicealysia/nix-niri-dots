@@ -26,5 +26,6 @@
     vscodium
     home-manager
     quickshell
+    catppuccin-cursors
   ];
 }

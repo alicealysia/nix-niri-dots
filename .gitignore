@@ -1,1 +1,4 @@
 cachix/
+.env
+.env.*
+users/

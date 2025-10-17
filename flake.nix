@@ -17,6 +17,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-defaults = {
+      url = "github:alicealysia/home-defaults";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = { 
     self, 
@@ -26,9 +34,23 @@
     quickshell, 
     dankMaterialShell,
     nix-vscode-extensions,
+    home-manager,
+    home-defaults,
     ... 
-  }@inputs: {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+  }@inputs: 
+    let
+      users-and-scripts = (import ./user-function.nix) (import ./users.nix);
+      inherit niri;
+      inherit nixpkgs;
+      inherit nixos-cli;
+      inherit quickshell;
+      inherit dankMaterialShell;
+      inherit nix-vscode-extensions;
+      inherit home-manager;
+      inherit home-defaults;
+    in
+  {
+    nixosConfigurations.alysios = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = {
         inherit inputs;
@@ -37,7 +59,7 @@
         ./hardware-configuration.nix
         ./cachix.nix
         ./configuration.nix
-        ./users.nix
+        home-manager.nixosModules.default
         dankMaterialShell.nixosModules.greeter
         nixos-cli.nixosModules.nixos-cli
         ({pkgs, ...}: {
@@ -46,12 +68,18 @@
             nix-vscode-extensions.overlays.default
             quickshell.overlays.default
           ];
+          
           programs.niri.package = pkgs.niri-unstable;
           programs.niri.enable = true;
           programs.dankMaterialShell.greeter = {
               enable = true;
               compositor.name = "niri";
           };
+          home-manager.sharedModules = [
+            home-defaults.homeConfigurations.default
+          ];
+          users.users = users-and-scripts.users;
+          home-manager.users = users-and-scripts.homes.homeConfigurations.default;
         })
         ./apps.nix
       ];
