@@ -13,7 +13,7 @@ user-list : {
   homes = builtins.listToAttrs (builtins.map (
     username : {
       name = "${username}";
-      value = (builtins.getFlake "./users/${username}").${username};
+      value = (builtins.getFlake "./users/${username}").${username}.homeConfigurations.default;
     }
   ) user-list);
 
