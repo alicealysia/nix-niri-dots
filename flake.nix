@@ -38,51 +38,46 @@
     home-defaults,
     ... 
   }@inputs: 
-    let
-      users-and-scripts = (import ./user-function.nix) (import ./users.nix);
-      inherit niri;
-      inherit nixpkgs;
-      inherit nixos-cli;
-      inherit quickshell;
-      inherit dankMaterialShell;
-      inherit nix-vscode-extensions;
-      inherit home-manager;
-      inherit home-defaults;
-    in
   {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = {
-        inherit inputs;
+    nixosConfigurations = { 
+      nixos = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {
+          inherit inputs;
+        };
+        modules = [
+          ./hardware-configuration.nix
+          ./configuration.nix
+          home-manager.nixosModules.default
+          dankMaterialShell.nixosModules.greeter
+          nixos-cli.nixosModules.nixos-cli
+          ({pkgs, ...}: 
+          {
+            nixpkgs.overlays = [
+              niri.overlays.niri
+              nix-vscode-extensions.overlays.default
+              quickshell.overlays.default
+            ];
+            
+            programs.niri.package = pkgs.niri-unstable;
+            programs.niri.enable = true;
+            programs.dankMaterialShell.greeter = {
+                enable = true;
+                compositor.name = "niri";
+            };
+            home-manager.sharedModules = [
+              home-defaults.homeConfigurations.default
+            ];
+            users.users.alice = {
+              isNormalUser = true;
+              name = "alice";
+              extraGroups = ["wheel" "networkmanagers"];
+              home = "/home/alice";
+            };
+          })
+          ./apps.nix
+        ];
       };
-      modules = [
-        ./hardware-configuration.nix
-        #@./cachix.nix
-        ./configuration.nix
-        home-manager.nixosModules.default
-        dankMaterialShell.nixosModules.greeter
-        nixos-cli.nixosModules.nixos-cli
-        ({pkgs, ...}: {
-          nixpkgs.overlays = [
-            niri.overlays.niri
-            nix-vscode-extensions.overlays.default
-            quickshell.overlays.default
-          ];
-          
-          programs.niri.package = pkgs.niri-unstable;
-          programs.niri.enable = true;
-          programs.dankMaterialShell.greeter = {
-              enable = true;
-              compositor.name = "niri";
-          };
-          home-manager.sharedModules = [
-            home-defaults.homeConfigurations.default
-          ];
-          users.users = users-and-scripts.users;
-          home-manager.users = users-and-scripts.homes.homeConfigurations.default;
-        })
-        ./apps.nix
-      ];
     };
   };
 }
