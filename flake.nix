@@ -57,7 +57,7 @@
       };
       modules = [
         ./hardware-configuration.nix
-        ./cachix.nix
+        #@./cachix.nix
         ./configuration.nix
         home-manager.nixosModules.default
         dankMaterialShell.nixosModules.greeter
