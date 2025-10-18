@@ -23,10 +23,10 @@
     };
     self.submodules = true;
     example-home = {
-      url = "git+file:user-homes/example-home";
+      url = ./user-homes/example-home;
     };
     home-defaults = {
-      url = "git+file:home-defaults";
+      url = ./home-defaults;
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
