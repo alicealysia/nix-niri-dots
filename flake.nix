@@ -68,12 +68,10 @@
             home-manager.sharedModules = [
               home-defaults.homeConfigurations.default
             ];
-            users.users.alice = {
-              isNormalUser = true;
-              name = "alice";
-              extraGroups = ["wheel" "networkmanagers"];
-              home = "/home/alice";
-            };
+            users.users = import ./users.nix;
+            home-manager.useUserPackages = true;
+            home-manager.useGlobalPkgs = true;
+            home-manager.enableLegacyProfileManagement = true;
           })
           ./apps.nix
         ];
