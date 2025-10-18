@@ -75,7 +75,7 @@
                 compositor.name = "niri";
             };
             home-manager.sharedModules = home-defaults.homeModules;
-            users.users = (import ./users.nix).users;
+            users.users = import ./users.nix;
             home-manager.useUserPackages = true;
             home-manager.useGlobalPkgs = true;
             home-manager.enableLegacyProfileManagement = true;

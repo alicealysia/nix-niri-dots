@@ -1,5 +1,4 @@
 {
-  users = {
     alice = {
       isNormalUser = true;
       name = "alice";
@@ -11,5 +10,4 @@
       name = "example";
       home = "/home/example";
     };
-  };
 }
