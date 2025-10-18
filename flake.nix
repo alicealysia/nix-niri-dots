@@ -21,12 +21,12 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    home-defaults = {
-      url = "github:alicealysia/home-defaults";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    self.submodules = true;
     example-home = {
-      url = "github:alicealysia/example-home";
+      url = "git+file:user-homes/example-home";
+    };
+    home-defaults = {
+      url = "git+file:home-defaults";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
