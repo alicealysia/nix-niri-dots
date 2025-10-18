@@ -26,6 +26,9 @@
     example-home = {
       url = ./user-homes/example-home;
     };
+    alice-home = {
+      url = ./user-homes/alice-home;
+    };
     # ENDHOMEURLS
     home-defaults = {
       url = ./home-defaults;
@@ -43,6 +46,7 @@
     home-manager,
     home-defaults,
     example-home,
+    alice-home,
     ... 
   }@inputs: 
   {
@@ -79,6 +83,7 @@
             home-manager.enableLegacyProfileManagement = true;
             ## HOMEDECLARATIONS
             home-manager.users.example = example-home.homeModules.default;
+            home-manager.users.alice = alice-home.homeModules.default;
             ## ENDHOMEDECLARATIONS
           })
           ./apps.nix

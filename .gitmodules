@@ -4,3 +4,6 @@
 [submodule "example-home"]
 	path = user-homes/example-home
 	url = https://github.com/alicealysia/example-home
+[submodule "user-homes/alice-home"]
+	path = user-homes/alice-home
+	url = https://github.com/alicealysia/home-manager
