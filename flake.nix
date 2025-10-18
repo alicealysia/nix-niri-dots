@@ -22,9 +22,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     self.submodules = true;
-    example-home = {
-      url = ./user-homes/example-home;
-    };
+    # example-home = {
+    #   url = ./user-homes/example-home;
+    # };
     home-defaults = {
       url = ./home-defaults;
       inputs.nixpkgs.follows = "nixpkgs";
@@ -40,7 +40,7 @@
     nix-vscode-extensions,
     home-manager,
     home-defaults,
-    example-home,
+    #example-home,
     ... 
   }@inputs: 
   {
@@ -71,11 +71,11 @@
                 compositor.name = "niri";
             };
             home-manager.sharedModules = home-defaults.homeModules;
-            users.users = import ./users.nix;
+            users.users = (import ./users.nix).users;
             home-manager.useUserPackages = true;
             home-manager.useGlobalPkgs = true;
             home-manager.enableLegacyProfileManagement = true;
-            home-manager.users.example = example-home.homeModules.default;
+            home-manager.users = (import ./users.nix).homes;
           })
           ./apps.nix
         ];
