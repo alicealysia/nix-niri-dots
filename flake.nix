@@ -31,8 +31,6 @@
       url = ./home-defaults;
       inputs.nixpkgs.follows = "nixpkgs";
     };
-  } ++ {
-    
   };
   outputs = { 
     self, 
