@@ -25,6 +25,10 @@
       url = "github:alicealysia/home-defaults";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    example-home = {
+      url = "github:alicealysia/example-home";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = { 
     self, 
@@ -36,6 +40,7 @@
     nix-vscode-extensions,
     home-manager,
     home-defaults,
+    example-home,
     ... 
   }@inputs: 
   {
@@ -69,6 +74,8 @@
             users.users = import ./users.nix;
             home-manager.useUserPackages = true;
             home-manager.useGlobalPkgs = true;
+            home-manager.enableLegacyProfileManagement = true;
+            home-manager.users.example = example-home.homeModules.default;
           })
           ./apps.nix
         ];
