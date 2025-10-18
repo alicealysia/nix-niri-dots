@@ -1,6 +1,3 @@
-[submodule "user-homes/example-home"]
-	path = user-homes/example-home
-	url = https://github.com/alicealysia/example-home.git
 [submodule "home-defaults"]
 	path = home-defaults
 	url = https://github.com/alicealysia/home-defaults
