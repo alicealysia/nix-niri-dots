@@ -22,6 +22,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     self.submodules = true;
+    # HOMEURLS
+    example-home = {
+      url = ./user-homes/example-home;
+    };
+    # ENDHOMEURLS
     home-defaults = {
       url = ./home-defaults;
       inputs.nixpkgs.follows = "nixpkgs";
@@ -39,6 +44,7 @@
     nix-vscode-extensions,
     home-manager,
     home-defaults,
+    example-home,
     ... 
   }@inputs: 
   {
@@ -73,7 +79,9 @@
             home-manager.useUserPackages = true;
             home-manager.useGlobalPkgs = true;
             home-manager.enableLegacyProfileManagement = true;
-            home-manager.users = (import ./users.nix).homes;
+            ## HOMEDECLARATIONS
+            home-manager.users.example = example-home.homeModules.default;
+            ## ENDHOMEDECLARATIONS
           })
           ./apps.nix
         ];
