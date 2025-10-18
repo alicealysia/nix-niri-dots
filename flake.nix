@@ -48,7 +48,7 @@
         modules = [
           ./hardware-configuration.nix
           ./configuration.nix
-          home-manager.nixosModules.default
+          home-manager.nixosModules.home-manager
           dankMaterialShell.nixosModules.greeter
           nixos-cli.nixosModules.nixos-cli
           ({pkgs, ...}: 
@@ -65,13 +65,10 @@
                 enable = true;
                 compositor.name = "niri";
             };
-            home-manager.sharedModules = [
-              home-defaults.homeConfigurations.default
-            ];
+            home-manager.sharedModules = home-defaults.homeModules;
             users.users = import ./users.nix;
             home-manager.useUserPackages = true;
             home-manager.useGlobalPkgs = true;
-            home-manager.enableLegacyProfileManagement = true;
           })
           ./apps.nix
         ];
