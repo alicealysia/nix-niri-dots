@@ -22,9 +22,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     self.submodules = true;
+    # HOMEURLS
     example-home = {
       url = ./user-homes/example-home;
     };
+    # ENDHOMEURLS
     home-defaults = {
       url = ./home-defaults;
       inputs.nixpkgs.follows = "nixpkgs";
@@ -75,7 +77,9 @@
             home-manager.useUserPackages = true;
             home-manager.useGlobalPkgs = true;
             home-manager.enableLegacyProfileManagement = true;
+            ## HOMEDECLARATIONS
             home-manager.users.example = example-home.homeModules.default;
+            ## ENDHOMEDECLARATIONS
           })
           ./apps.nix
         ];
