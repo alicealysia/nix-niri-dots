@@ -12,7 +12,4 @@
       home = "/home/example";
     };
   };
-  homes = {
-    example = (builtins.getFlake (builtins.toString ./user-homes/example-home)).homeConfigurations.default;
-  };
 }

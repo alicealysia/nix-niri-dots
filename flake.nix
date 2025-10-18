@@ -22,13 +22,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     self.submodules = true;
-    # example-home = {
-    #   url = ./user-homes/example-home;
-    # };
     home-defaults = {
       url = ./home-defaults;
       inputs.nixpkgs.follows = "nixpkgs";
     };
+  } ++ {
+    
   };
   outputs = { 
     self, 
@@ -40,7 +39,6 @@
     nix-vscode-extensions,
     home-manager,
     home-defaults,
-    #example-home,
     ... 
   }@inputs: 
   {
