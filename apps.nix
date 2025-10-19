@@ -26,6 +26,12 @@
     vscodium
     home-manager
     quickshell
-    catppuccin-cursors
+    catppuccin-cursors.mochaLight
+    brightnessctl
+    cava
+    cliphist
+    gammastep
+    qt6-multimedia
+    tela-circle-icon-theme
   ];
 }
